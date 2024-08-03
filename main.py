@@ -23,19 +23,53 @@ class Hero:
         return f"Герой {self.name}: Здоровье = {self.health}, Сила удара = {self.attack_power}"
 
 
+# # Пример использования класса
+# if __name__ == "__main__":
+#     hero1 = Hero(name="Герой 1", health=100)
+#     hero2 = Hero(name="Герой 2", health=80)
+#
+#     print(hero1)
+#     print(hero2)
+#
+#     hero1.attack(hero2)
+#     print(hero2)
+#
+#     hero2.attack(hero1)
+#     print(hero1)
+#
+#     print(f"Герой 1 жив? {hero1.is_alive()}")
+#     print(f"Герой 2 жив? {hero2.is_alive()}")
+
+class Game:
+    def __init__(self, player, computer):
+        if not isinstance(player, Hero) or not isinstance(computer, Hero):
+            raise ValueError("Both player and computer must be instances of the Hero class.")
+        self.player = player
+        self.computer = computer
+
+    def start(self):
+        """Начинает игру, чередуя ходы игрока и компьютера, пока один из героев не умрет."""
+        print("Игра начинается!")
+        while self.player.is_alive() and self.computer.is_alive():
+            self.player.attack(self.computer)
+            print(f"{self.computer}")
+
+            if not self.computer.is_alive():
+                print(f"{self.computer.name} погиб! {self.player.name} победил!")
+                break
+
+            self.computer.attack(self.player)
+            print(f"{self.player}")
+
+            if not self.player.is_alive():
+                print(f"{self.player.name} погиб! {self.computer.name} победил!")
+                break
+
+
 # Пример использования класса
 if __name__ == "__main__":
-    hero1 = Hero(name="Герой 1", health=100)
-    hero2 = Hero(name="Герой 2", health=80)
+    player_hero = Hero(name="Игрок", health=100)
+    computer_hero = Hero(name="Компьютер", health=100)
 
-    print(hero1)
-    print(hero2)
-
-    hero1.attack(hero2)
-    print(hero2)
-
-    hero2.attack(hero1)
-    print(hero1)
-
-    print(f"Герой 1 жив? {hero1.is_alive()}")
-    print(f"Герой 2 жив? {hero2.is_alive()}")
+    game = Game(player=player_hero, computer=computer_hero)
+    game.start()
