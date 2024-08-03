@@ -1,3 +1,5 @@
+import random
+
 class Hero:
     def __init__(self, name, health, attack_power=20):
         self.name = name
@@ -68,8 +70,23 @@ class Game:
 
 # Пример использования класса
 if __name__ == "__main__":
-    player_hero = Hero(name="Игрок", health=100)
-    computer_hero = Hero(name="Компьютер", health=100)
+    # player_hero = Hero(name="Игрок", health=100)
+    # computer_hero = Hero(name="Компьютер", health=100)
+    try:
+        user_input = int(input("Введите произвольное число от 1 до 100: "))
+        if not 1 <= user_input <= 100:
+            raise ValueError("Число должно быть в диапазоне от 1 до 100.")
+    except ValueError as e:
+        print(f"Ошибка: {e}")
+        exit(1)
+
+    random.seed(user_input)
+
+    player_health = random.randint(50, 200)
+    computer_health = random.randint(50, 200)
+
+    player_hero = Hero(name="Игрок", health=player_health)
+    computer_hero = Hero(name="Компьютер", health=computer_health)
 
     game = Game(player=player_hero, computer=computer_hero)
     game.start()
